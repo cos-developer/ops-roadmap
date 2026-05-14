@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operations Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:       #0f1623;
+  --ink-mid:   #3d4658;
+  --ink-soft:  #8491a8;
+  --ink-faint: #c8d0de;
+  --bg:        #f4f6fa;
+  --surface:   #ffffff;
+  --surface2:  #eef1f7;
+
+  --blue:      #2b5ee8;
+  --blue-lt:   #dde7ff;
+  --amber:     #d08700;
+  --amber-lt:  #fff0c2;
+  --slate:     #5e6e8a;
+  --slate-lt:  #e4e8f0;
+  --green:     #1a8c5b;
+  --green-lt:  #d4f5e6;
+  --red:       #c93535;
+  --red-lt:    #fde8e8;
+
+  --radius-sm: 8px;
+  --radius:    14px;
+  --radius-lg: 20px;
+
+  --shadow-sm: 0 1px 3px rgba(15,22,35,.06), 0 1px 2px rgba(15,22,35,.04);
+  --shadow:    0 4px 16px rgba(15,22,35,.08), 0 1px 4px rgba(15,22,35,.05);
+  --shadow-lg: 0 12px 40px rgba(15,22,35,.12), 0 4px 12px rgba(15,22,35,.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: var(--ink);
+  padding: 0 40px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 72px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--blue);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.header-wordmark {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.header-wordmark h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: -.01em;
+  line-height: 1;
+}
+
+.header-wordmark span {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.meta-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0 16px;
+  border-right: 1px solid rgba(255,255,255,.08);
+}
+.meta-stat:first-child { border-left: 1px solid rgba(255,255,255,.08); }
+
+.meta-stat .num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: #fff;
+  line-height: 1;
+}
+.meta-stat .lbl {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+
+/* ── VIEW TOGGLE ── */
+.view-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--ink-faint);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.view-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--surface2);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.view-tab {
+  padding: 6px 18px;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all .18s ease;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.view-tab svg { opacity: .6; transition: opacity .18s; }
+.view-tab.active {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+.view-tab.active svg { opacity: 1; }
+.view-tab:not(.active):hover { color: var(--ink-mid); background: rgba(255,255,255,.6); }
+
+.view-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-row {
+  display: flex;
+  gap: 6px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: default;
+}
+.status-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.sb-planning  { background: var(--blue-lt);  color: var(--blue); }
+.sb-planning::before  { background: var(--blue); }
+.sb-progress  { background: var(--amber-lt); color: var(--amber); }
+.sb-progress::before  { background: var(--amber); }
+.sb-hold      { background: var(--slate-lt); color: var(--slate); }
+.sb-hold::before      { background: var(--slate); }
+.sb-review    { background: var(--green-lt); color: var(--green); }
+.sb-review::before    { background: var(--green); }
+.sb-complete  { background: #d4f5e6; color: #0f6840; }
+.sb-complete::before  { background: #0f6840; }
+
+/* ── PANELS ── */
+.panel { display: none; padding: 32px 40px; }
+.panel.active { display: block; animation: fadeUp .25s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════
+   KANBAN
+══════════════════════════════ */
+.kanban-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.k-col {
+  background: var(--surface2);
+  border-radius: var(--radius);
+  padding: 14px;
+  min-width: 0;
+}
+
+.k-col-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ink-faint);
+}
+
+.k-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.k-col-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--ink-mid);
+  flex: 1;
+}
+
+.k-col-badge {
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--surface);
+  color: var(--ink-soft);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* Card */
+.k-card {
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+  border-top: 3px solid transparent;
+  transition: box-shadow .18s, transform .18s;
+  cursor: default;
+}
+.k-card:last-child { margin-bottom: 0; }
+.k-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+
+.k-card-emoji { font-size: 18px; margin-bottom: 6px; display: block; }
+.k-card-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; line-height: 1.35; }
+.k-card-desc  { font-size: 11px; color: var(--ink-soft); line-height: 1.55; margin-bottom: 12px; }
+
+.k-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.k-due {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--surface2);
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.k-due.overdue { color: var(--red); background: var(--red-lt); }
+
+.avatar-stack { display: flex; }
+.avatar-stack .av { margin-left: -5px; }
+.avatar-stack .av:first-child { margin-left: 0; }
+
+.av {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════
+   TIMELINE
+══════════════════════════════ */
+.tl-wrap {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.tl-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tl-table thead th {
+  background: var(--ink);
+  color: rgba(255,255,255,.65);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 14px 20px;
+  text-align: left;
+  white-space: nowrap;
+}
+.tl-table thead th:first-child { color: #fff; }
+
+.tl-table tbody tr {
+  border-bottom: 1px solid var(--surface2);
+  transition: background .15s;
+}
+.tl-table tbody tr:last-child { border-bottom: none; }
+.tl-table tbody tr:hover { background: #f8fafd; }
+
+.tl-table td {
+  padding: 18px 20px;
+  vertical-align: middle;
+}
+
+.proj-cell { display: flex; align-items: center; gap: 12px; }
+.proj-emoji-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.proj-text strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.proj-text span { font-size: 11px; color: var(--ink-soft); }
+
+.owner-cell { display: flex; align-items: center; gap: 8px; }
+.owner-cell .av { width: 28px; height: 28px; font-size: 10px; }
+.owner-name { font-size: 13px; font-weight: 500; color: var(--ink-mid); }
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.status-pill::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+
+.sp-planning { background: var(--blue-lt);  color: var(--blue); }
+.sp-planning::before { background: var(--blue); }
+.sp-progress { background: var(--amber-lt); color: var(--amber); }
+.sp-progress::before { background: var(--amber); }
+.sp-hold     { background: var(--slate-lt); color: var(--slate); }
+.sp-hold::before { background: var(--slate); }
+.sp-review   { background: var(--green-lt); color: var(--green); }
+.sp-review::before { background: var(--green); }
+.sp-complete { background: #d4f5e6; color: #0f6840; }
+.sp-complete::before { background: #0f6840; }
+
+.bar-wrap {
+  background: var(--surface2);
+  border-radius: 20px;
+  height: 7px;
+  width: 110px;
+  overflow: hidden;
+  display: inline-block;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width .6s ease;
+}
+
+.bar-blue   { background: linear-gradient(90deg, #5b8af0, var(--blue)); }
+.bar-amber  { background: linear-gradient(90deg, #f5c842, var(--amber)); }
+.bar-slate  { background: var(--slate); }
+.bar-green  { background: linear-gradient(90deg, #3ecf8e, var(--green)); }
+
+.pct-label { font-size: 12px; font-weight: 700; color: var(--ink-mid); margin-left: 8px; }
+
+.date-cell { font-size: 12px; color: var(--ink-mid); white-space: nowrap; }
+.date-cell .date-label { font-size: 10px; color: var(--ink-soft); font-weight: 500; display: block; margin-bottom: 2px; }
+
+.priority-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.p-high { background: var(--red-lt);   color: var(--red); }
+.p-med  { background: var(--amber-lt); color: var(--amber); }
+.p-low  { background: var(--slate-lt); color: var(--slate); }
+
+/* ── TEAM COLUMN ── */
+.team-cell { display: flex; flex-direction: column; gap: 4px; }
+.team-member { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.team-member .av { width: 20px; height: 20px; font-size: 8px; border: none; }
+.team-role { font-size: 10px; color: var(--ink-soft); font-weight: 500; }
+
+/* ── LEGEND STRIP ── */
+.legend-strip {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 40px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--surface2);
+  flex-wrap: wrap;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-mid);
+}
+.legend-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.legend-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-right: 4px;
+}
+
+/* ── LAST UPDATED ── */
+.footer-bar {
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--ink-faint);
+  margin-top: 32px;
+}
+.footer-bar p { font-size: 11px; color: var(--ink-soft); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .kanban-grid { grid-template-columns: repeat(3, 1fr); }
+  .site-header { padding: 0 20px; }
+  .view-bar { padding: 0 20px; }
+  .panel { padding: 24px 20px; }
+  .legend-strip { padding: 14px 20px; }
+  .footer-bar { padding: 16px 20px; }
+  .badge-row { display: none; }
+}
+@media (max-width: 700px) {
+  .kanban-grid { grid-template-columns: 1fr 1fr; }
+  .header-meta { display: none; }
+  .tl-table td:nth-child(n+5) { display: none; }
+  .tl-table th:nth-child(n+5) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-left">
+    <div class="header-icon">🗺</div>
+    <div class="header-wordmark">
+      <h1>Operations Roadmap</h1>
+      <span>Facilities &amp; Projects · 2025</span>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="meta-stat">
+      <span class="num">7</span>
+      <span class="lbl">Total Projects</span>
+    </div>
+    <div class="meta-stat">
+      <span class="num">3</span>
+      <span class="lbl">In Progress</span>
+    </div>
+    <div class="meta-stat">
+      <span class="num">1</span>
+      <span class="lbl">In Review</span>
+    </div>
+    <div class="meta-stat">
+      <span class="num">1</span>
+      <span class="lbl">On Hold</span>
+    </div>
+  </div>
+</header>
+
+<!-- VIEW TOGGLE + LEGEND -->
+<div class="view-bar">
+  <div class="view-tabs">
+    <button class="view-tab active" onclick="switchView('kanban', this)">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="3.5" height="12" rx="1.2" fill="currentColor"/><rect x="5.25" y="1" width="3.5" height="9" rx="1.2" fill="currentColor"/><rect x="9.5" y="1" width="3.5" height="11" rx="1.2" fill="currentColor"/></svg>
+      Kanban Board
+    </button>
+    <button class="view-tab" onclick="switchView('timeline', this)">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="1.5" rx=".75" fill="currentColor"/><rect x="1" y="6.25" width="12" height="1.5" rx=".75" fill="currentColor"/><rect x="1" y="10.5" width="8" height="1.5" rx=".75" fill="currentColor"/></svg>
+      Timeline Table
+    </button>
+  </div>
+  <div class="badge-row">
+    <span class="status-badge sb-planning">Planning</span>
+    <span class="status-badge sb-progress">In Progress</span>
+    <span class="status-badge sb-hold">On Hold</span>
+    <span class="status-badge sb-review">In Review</span>
+    <span class="status-badge sb-complete">Complete</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     KANBAN PANEL
+══════════════════════════════ -->
+<div id="kanban" class="panel active">
+  <div class="kanban-grid">
+
+    <!-- PLANNING -->
+    <div class="k-col">
+      <div class="k-col-head">
+        <div class="k-dot" style="background:var(--blue);"></div>
+        <span class="k-col-label">Planning</span>
+        <span class="k-col-badge">3</span>
+      </div>
+
+      <div class="k-card" style="border-top-color:var(--blue);">
+        <span class="k-card-emoji">🔇</span>
+        <div class="k-card-title">The Spot Soundproofing</div>
+        <div class="k-card-desc">Soundproofing assessment for The Spot — Nick to contact Laservision Josh for evaluation.</div>
+        <div class="k-card-footer">
+          <span class="k-due">Start: TBD</span>
+          <div class="avatar-stack">
+            <div class="av" style="background:#0e7490;" title="Nick — Lead">N</div>
+            <div class="av" style="background:#1d4ed8;" title="Elder Jacob">EJ</div>
+            <div class="av" style="background:#4338ca;" title="Elder Ken">EK</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="k-card" style="border-top-color:var(--blue);">
+        <span class="k-card-emoji">🏗</span>
+        <div class="k-card-title">Front Entry Sign</div>
+        <div class="k-card-desc">New physical sign for the front entry of the church parking lot — design and install.</div>
+        <div class="k-card-footer">
+          <span class="k-due">Start: TBD</span>
+          <div class="avatar-stack">
+            <div class="av" style="background:#7c3aed;" title="Jake D. — Lead">JD</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="k-card" style="border-top-color:var(--blue);">
+        <span class="k-card-emoji">📋</span>
+        <div class="k-card-title">Q3 Budget Review</div>
+        <div class="k-card-desc">Annual operations budget review and allocation planning for next fiscal period.</div>
+        <div class="k-card-footer">
+          <span class="k-due">Jun 1</span>
+          <div class="avatar-stack">
+            <div class="av" style="background:#0891b2;" title="Mike R. — Lead">MR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IN PROGRESS -->
+    <div class="k-col">
+      <div class="k-col-head">
+        <div class="k-dot" style="background:var(--amber);"></div>
+        <span class="k-col-label">In Progress</span>
+        <span class="k-col-badge">2</span>
+      </div>
+
+      <div class="k-card" style="border-top-color:var(--amber);">
+        <span class="k-card-emoji">🛖</span>
+        <div class="k-card-title">The Hub</div>
+        <div class="k-card-desc">Physical welcome flag/table/hub for newcomers — full build and furnish.</div>
+        <div class="k-card-footer">
+          <span class="k-due">Jul 15</span>
+          <div class="avatar-stack">
+            <div class="av" style="background:#dc2626;" title="Tom K. — Lead">TK</div>
+            <div class="av" style="background:#16a34a;" title="Sarah P. — Design">SP</div>
+            <div class="av" style="background:#7c3aed;" title="Jake D. — Approvals">JD</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="k-card" style="border-top-color:var(--amber);">
+        <span class="k-card-emoji">🤖</span>
+        <div class="k-card-title">Automated Attendance Counter</div>
+        <div class="k-card-desc">Use AI to automatically track attendance across all 3 Sunday services.</div>
+        <div class="k-card-footer">
+          <span class="k-due">TBD</span>
+          <div class="avatar-stack">
+            <div class="av" style="background:#059669;" title="JC — Lead">JC</div>
+            <div class="av" style="background:#0e7490;" title="Nick Goto">NG</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="k-card" style="border-top-color:var(--amber);">
+        <span class="k-card-emoji">🛣</span>
+        <div class="k-card-title">Freeway Sign Redo</div>
+        <div class="k-card-desc">Replace and update the large church sign visible from the freeway — new design and structure.</div>
+        <div class="k-card-footer">
+          <span class="k-due">Aug 30</span>
+          <div class="avatar-stack">
+            <div class="av" style="background:#d97706;" title="Amy L. — Lead">AL</div>
+            <div class="av" style="background:#7c3aed;" title="Jake D. — Permits">JD</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ON HOLD -->
+    <div class="k-col">
+      <div class="k-col-head">
+        <div class="k-dot" style="background:var(--slate);"></div>
+        <span class="k-col-label">On Hold</span>
+        <span class="k-col-badge">1</span>
+      </div>
+
+      <div class="k-card" style="border-top-color:var(--slate);">
+        <span class="k-card-emoji">🔊</span>
+        <div class="k-card-title">Lobby Audio Upgrade</div>
+        <div class="k-card-desc">Speaker system for main lobby — pending vendor quotes and board approval before proceeding.</div>
+        <div class="k-card-footer">
+          <span class="k-due">TBD</span>
+          <div class="avatar-stack">
+            <div class="av" style="background:#0891b2;" title="Mike R. — Lead">MR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IN REVIEW -->
+    <div class="k-col">
+      <div class="k-col-head">
+        <div class="k-dot" style="background:var(--green);"></div>
+        <span class="k-col-label">In Review</span>
+        <span class="k-col-badge">1</span>
+      </div>
+
+      <div class="k-card" style="border-top-color:var(--green);">
+        <span class="k-card-emoji">📦</span>
+        <div class="k-card-title">Storage Room Reorg</div>
+        <div class="k-card-desc">Reorganize and clearly label all storage areas in Building B. Final walkthrough pending.</div>
+        <div class="k-card-footer">
+          <span class="k-due">May 20</span>
+          <div class="avatar-stack">
+            <div class="av" style="background:#dc2626;" title="Tom K. — Lead">TK</div>
+            <div class="av" style="background:#16a34a;" title="Sarah P. — Execution">SP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPLETE -->
+    <div class="k-col">
+      <div class="k-col-head">
+        <div class="k-dot" style="background:#0f6840;"></div>
+        <span class="k-col-label">Complete</span>
+        <span class="k-col-badge">1</span>
+      </div>
+
+      <div class="k-card" style="border-top-color:#0f6840; opacity:.7;">
+        <span class="k-card-emoji">🚿</span>
+        <div class="k-card-title">Restroom Refresh</div>
+        <div class="k-card-desc">Deep clean and new fixtures installed in all public restrooms.</div>
+        <div class="k-card-footer">
+          <span class="k-due">✓ Apr 30</span>
+          <div class="avatar-stack">
+            <div class="av" style="background:#16a34a;" title="Sarah P. — Lead">SP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /kanban-grid -->
+
+  <div class="footer-bar">
+    <p>Last updated: May 14, 2025 &nbsp;·&nbsp; 7 projects total &nbsp;·&nbsp; Hover cards for details</p>
+    <p style="color:var(--blue);font-weight:600;font-size:12px;">2 active · 1 stalled · 1 nearly done</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     TIMELINE PANEL
+══════════════════════════════ -->
+<div id="timeline" class="panel">
+
+  <div class="tl-wrap">
+    <table class="tl-table">
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Owner</th>
+          <th>Team &amp; Roles</th>
+          <th>Status</th>
+          <th>Progress</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- THE HUB -->
+        <tr>
+          <td>
+            <div class="proj-cell">
+              <div class="proj-emoji-box" style="background:#fff3e0;">🛖</div>
+              <div class="proj-text">
+                <strong>The Hub</strong>
+                <span>Newcomer welcome station — build &amp; furnish</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="owner-cell">
+              <div class="av" style="background:#dc2626;">TK</div>
+              <span class="owner-name">Tom K.</span>
+            </div>
+          </td>
+          <td>
+            <div class="team-cell">
+              <div class="team-member"><div class="av" style="background:#dc2626;">TK</div><span class="team-role">Tom K. — Project Lead</span></div>
+              <div class="team-member"><div class="av" style="background:#16a34a;">SP</div><span class="team-role">Sarah P. — Design &amp; Decor</span></div>
+              <div class="team-member"><div class="av" style="background:#7c3aed;">JD</div><span class="team-role">Jake D. — Approvals</span></div>
+            </div>
+          </td>
+          <td><span class="status-pill sp-progress">In Progress</span></td>
+          <td>
+            <div style="display:flex;align-items:center;">
+              <div class="bar-wrap"><div class="bar-fill bar-amber" style="width:40%;"></div></div>
+              <span class="pct-label">40%</span>
+            </div>
+          </td>
+          <td class="date-cell"><span class="date-label">Started</span>Apr 1, 2025</td>
+          <td class="date-cell"><span class="date-label">Target</span>Jul 15, 2025</td>
+          <td><span class="priority-tag p-high">High</span></td>
+        </tr>
+
+        <!-- FREEWAY SIGN -->
+        <tr>
+          <td>
+            <div class="proj-cell">
+              <div class="proj-emoji-box" style="background:#fff3e0;">🛣</div>
+              <div class="proj-text">
+                <strong>Freeway Sign Redo</strong>
+                <span>Replace freeway-visible church sign</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="owner-cell">
+              <div class="av" style="background:#d97706;">AL</div>
+              <span class="owner-name">Amy L.</span>
+            </div>
+          </td>
+          <td>
+            <div class="team-cell">
+              <div class="team-member"><div class="av" style="background:#d97706;">AL</div><span class="team-role">Amy L. — Project Lead</span></div>
+              <div class="team-member"><div class="av" style="background:#7c3aed;">JD</div><span class="team-role">Jake D. — Permits &amp; Vendor</span></div>
+            </div>
+          </td>
+          <td><span class="status-pill sp-progress">In Progress</span></td>
+          <td>
+            <div style="display:flex;align-items:center;">
+              <div class="bar-wrap"><div class="bar-fill bar-amber" style="width:20%;"></div></div>
+              <span class="pct-label">20%</span>
+            </div>
+          </td>
+          <td class="date-cell"><span class="date-label">Started</span>May 1, 2025</td>
+          <td class="date-cell"><span class="date-label">Target</span>Aug 30, 2025</td>
+          <td><span class="priority-tag p-high">High</span></td>
+        </tr>
+
+        <!-- FRONT ENTRY SIGN -->
+        <tr>
+          <td>
+            <div class="proj-cell">
+              <div class="proj-emoji-box" style="background:#dde7ff;">🏗</div>
+              <div class="proj-text">
+                <strong>Front Entry Sign</strong>
+                <span>Parking lot entry — design &amp; install</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="owner-cell">
+              <div class="av" style="background:#7c3aed;">JD</div>
+              <span class="owner-name">Jake D.</span>
+            </div>
+          </td>
+          <td>
+            <div class="team-cell">
+              <div class="team-member"><div class="av" style="background:#7c3aed;">JD</div><span class="team-role">Jake D. — Project Lead</span></div>
+              <div class="team-member" style="color:var(--ink-soft);font-size:10px;padding-left:2px;">+ TBD team</div>
+            </div>
+          </td>
+          <td><span class="status-pill sp-planning">Planning</span></td>
+          <td>
+            <div style="display:flex;align-items:center;">
+              <div class="bar-wrap"><div class="bar-fill bar-blue" style="width:5%;"></div></div>
+              <span class="pct-label">5%</span>
+            </div>
+          </td>
+          <td class="date-cell"><span class="date-label">Started</span>TBD</td>
+          <td class="date-cell"><span class="date-label">Target</span>TBD</td>
+          <td><span class="priority-tag p-med">Med</span></td>
+        </tr>
+
+        <!-- LOBBY AUDIO -->
+        <tr>
+          <td>
+            <div class="proj-cell">
+              <div class="proj-emoji-box" style="background:#e4e8f0;">🔊</div>
+              <div class="proj-text">
+                <strong>Lobby Audio Upgrade</strong>
+                <span>Speaker system — pending quotes</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="owner-cell">
+              <div class="av" style="background:#0891b2;">MR</div>
+              <span class="owner-name">Mike R.</span>
+            </div>
+          </td>
+          <td>
+            <div class="team-cell">
+              <div class="team-member"><div class="av" style="background:#0891b2;">MR</div><span class="team-role">Mike R. — Project Lead</span></div>
+            </div>
+          </td>
+          <td><span class="status-pill sp-hold">On Hold</span></td>
+          <td>
+            <div style="display:flex;align-items:center;">
+              <div class="bar-wrap"><div class="bar-fill bar-slate" style="width:10%;"></div></div>
+              <span class="pct-label">10%</span>
+            </div>
+          </td>
+          <td class="date-cell"><span class="date-label">Est. Start</span>Jun 15, 2025</td>
+          <td class="date-cell"><span class="date-label">Target</span>Sep 30, 2025</td>
+          <td><span class="priority-tag p-low">Low</span></td>
+        </tr>
+
+        <!-- STORAGE REORG -->
+        <tr>
+          <td>
+            <div class="proj-cell">
+              <div class="proj-emoji-box" style="background:#d4f5e6;">📦</div>
+              <div class="proj-text">
+                <strong>Storage Room Reorg</strong>
+                <span>Building B — organize &amp; label</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="owner-cell">
+              <div class="av" style="background:#dc2626;">TK</div>
+              <span class="owner-name">Tom K.</span>
+            </div>
+          </td>
+          <td>
+            <div class="team-cell">
+              <div class="team-member"><div class="av" style="background:#dc2626;">TK</div><span class="team-role">Tom K. — Project Lead</span></div>
+              <div class="team-member"><div class="av" style="background:#16a34a;">SP</div><span class="team-role">Sarah P. — Execution</span></div>
+            </div>
+          </td>
+          <td><span class="status-pill sp-review">In Review</span></td>
+          <td>
+            <div style="display:flex;align-items:center;">
+              <div class="bar-wrap"><div class="bar-fill bar-green" style="width:85%;"></div></div>
+              <span class="pct-label">85%</span>
+            </div>
+          </td>
+          <td class="date-cell"><span class="date-label">Started</span>Apr 15, 2025</td>
+          <td class="date-cell"><span class="date-label">Target</span>May 20, 2025</td>
+          <td><span class="priority-tag p-med">Med</span></td>
+        </tr>
+
+        <!-- AUTOMATED ATTENDANCE COUNTER -->
+        <tr>
+          <td>
+            <div class="proj-cell">
+              <div class="proj-emoji-box" style="background:#d1fae5;">🤖</div>
+              <div class="proj-text">
+                <strong>Automated Attendance Counter</strong>
+                <span>AI attendance tracking across 3 Sunday services</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="owner-cell">
+              <div class="av" style="background:#059669;">JC</div>
+              <span class="owner-name">JC</span>
+            </div>
+          </td>
+          <td>
+            <div class="team-cell">
+              <div class="team-member"><div class="av" style="background:#059669;">JC</div><span class="team-role">JC — Project Lead</span></div>
+              <div class="team-member"><div class="av" style="background:#0e7490;">NG</div><span class="team-role">Nick Goto — Tech Support</span></div>
+            </div>
+          </td>
+          <td><span class="status-pill sp-progress">In Progress</span></td>
+          <td>
+            <div style="display:flex;align-items:center;">
+              <div class="bar-wrap"><div class="bar-fill bar-amber" style="width:10%;"></div></div>
+              <span class="pct-label">10%</span>
+            </div>
+          </td>
+          <td class="date-cell"><span class="date-label">Est. Start</span>TBD</td>
+          <td class="date-cell"><span class="date-label">Target</span>TBD</td>
+          <td><span class="priority-tag p-med">Med</span></td>
+        </tr>
+
+        <!-- THE SPOT SOUNDPROOFING -->
+        <tr>
+          <td>
+            <div class="proj-cell">
+              <div class="proj-emoji-box" style="background:#dde7ff;">🔇</div>
+              <div class="proj-text">
+                <strong>The Spot Soundproofing</strong>
+                <span>Soundproofing assessment — Laservision Josh</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="owner-cell">
+              <div class="av" style="background:#0e7490;">N</div>
+              <span class="owner-name">Nick</span>
+            </div>
+          </td>
+          <td>
+            <div class="team-cell">
+              <div class="team-member"><div class="av" style="background:#0e7490;">N</div><span class="team-role">Nick — Project Lead</span></div>
+              <div class="team-member"><div class="av" style="background:#1d4ed8;">EJ</div><span class="team-role">Elder Jacob — Oversight</span></div>
+              <div class="team-member"><div class="av" style="background:#4338ca;">EK</div><span class="team-role">Elder Ken — Oversight</span></div>
+            </div>
+          </td>
+          <td><span class="status-pill sp-planning">Planning</span></td>
+          <td>
+            <div style="display:flex;align-items:center;">
+              <div class="bar-wrap"><div class="bar-fill bar-blue" style="width:5%;"></div></div>
+              <span class="pct-label">5%</span>
+            </div>
+          </td>
+          <td class="date-cell"><span class="date-label">Est. Start</span>TBD</td>
+          <td class="date-cell"><span class="date-label">Target</span>TBD</td>
+          <td><span class="priority-tag p-med">Med</span></td>
+        </tr>
+
+        <!-- RESTROOM (COMPLETE) -->
+        <tr style="opacity:.6;">
+          <td>
+            <div class="proj-cell">
+              <div class="proj-emoji-box" style="background:#d4f5e6;">🚿</div>
+              <div class="proj-text">
+                <strong>Restroom Refresh</strong>
+                <span>Public restrooms — deep clean &amp; fixtures</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="owner-cell">
+              <div class="av" style="background:#16a34a;">SP</div>
+              <span class="owner-name">Sarah P.</span>
+            </div>
+          </td>
+          <td>
+            <div class="team-cell">
+              <div class="team-member"><div class="av" style="background:#16a34a;">SP</div><span class="team-role">Sarah P. — Project Lead</span></div>
+            </div>
+          </td>
+          <td><span class="status-pill sp-complete">Complete</span></td>
+          <td>
+            <div style="display:flex;align-items:center;">
+              <div class="bar-wrap"><div class="bar-fill bar-green" style="width:100%;"></div></div>
+              <span class="pct-label">100%</span>
+            </div>
+          </td>
+          <td class="date-cell"><span class="date-label">Started</span>Apr 1, 2025</td>
+          <td class="date-cell"><span class="date-label">Completed</span>Apr 30, 2025</td>
+          <td><span class="priority-tag p-med">Med</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer-bar">
+    <p>Last updated: May 14, 2025 &nbsp;·&nbsp; 8 projects shown &nbsp;·&nbsp; Completed rows are dimmed</p>
+    <p style="color:var(--blue);font-weight:600;font-size:12px;">Update dates, owners &amp; progress as projects move</p>
+  </div>
+
+</div><!-- /timeline panel -->
+
+<script>
+  function switchView(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.view-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
